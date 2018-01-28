@@ -1,0 +1,48 @@
+group 'com.postrowski'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
+
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    providedCompile group: 'javax', name: 'javaee-api', version: '7.0'
+
+    compile project(':service_common')
+
+    //cargo 'org.wildfly:wildfly-controller-client:8.1.0.Final'
+
+    def cargoVersion = '1.6.3'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+          "org.codehaus.cargo:cargo-ant:$cargoVersion"
+}
+
+war {
+    archiveName = 'ServiceOne.war'
+}
+
+cargo {
+    containerId  = 'wildfly10x'
+
+    remote {
+        hostname = '127.0.0.1'
+        username = 'pioost2'
+        password = 'pioost2'
+    }
+}

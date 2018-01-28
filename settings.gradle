@@ -1,0 +1,5 @@
+rootProject.name = 'two_war_one_server_invoke'
+include 'service_one'
+include 'service_common'
+include 'service_two'
+
